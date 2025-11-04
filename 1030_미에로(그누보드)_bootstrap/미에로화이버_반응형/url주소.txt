@@ -1,0 +1,20 @@
+//그누보드 공지사항 게시판 주소
+https://wdesign2010.dothome.co.kr/board/bbs/board.php?bo_table=me_notice
+
+//그누보드 게시판 관리자 페이지 주소
+https://wdesign2010.dothome.co.kr/board
+
+//db관리자 페이지 주소
+https://wdesign2010.dothome.co.kr/myadmin/
+
+../../miero/header.php
+../../miero/footer.php
+
+찾을 단어                        ./images/
+변경하고자 하는 단어     http://wdesign2010.dothome.co.kr/miero/images/
+
+
+
+
+
+
