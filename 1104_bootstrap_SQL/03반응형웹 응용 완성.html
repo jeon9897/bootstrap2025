@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01반응형 내비게이션</title>
+  <!-- 1. 부트스트랩 css -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <!-- 2. 부트스트랩 javascript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      font-family: "Noto Sans KR", sans-serif;
+    }
+    main{overflow-x:hidden;}
+    .logo{height:50px;}
+    /* #myCarousel{height:90vh;} */
+    .nav-item a{color:#333;font-size:1.2rem;}
+    .nav-item a:hover{color:#f00;}
+
+    #myCarousel{position:relative;height:91vh;overflow:hidden;}
+    #myCarousel h2{
+      position:absolute;
+      z-index: 100;top:30%;
+      width:100%;
+      text-align:center;
+      color:#fff;
+      line-height:130%;
+      font-size:5rem;
+    }
+    #myCarousel h2 small{display:block;font-size:2.2rem;}
+    .carousel-item{
+      position:relative;
+      /* height:90vh; */
+      margin-bottom:10px;
+    }
+    .carousel-item h3{
+      position:absolute;
+      z-index:100;
+      font-size:1.5rem;
+      color:#fff;
+      left:50%;top:50%;
+      transform:translate(-50%, -50%);
+    }
+    .carousel-item img{width:100%;}
+
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      height: 100vh; /* 필요에 맞게 조절 */
+      overflow: hidden;
+    }
+    .video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-wrap::after {
+      /* ackground: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2)); */
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4); /* 투명도 조절: 0.4~0.6 권장 */
+      pointer-events: none; /* 클릭 막지 않게 */
+    }
+
+    /* 정보트론 */
+    .jumbotron{
+      padding-top:50px;
+      padding-bottom:50px;
+      margin-bottom:50px;
+    }
+    .jumbotron h2{
+      font-size:6rem;
+      margin-bottom:20px;
+    }
+    .jumbotron .txt01{
+      padding:10px 0px 30px 0px;
+    }
+    /* 2번 콘텐츠 서식 */
+    .cont2{}
+    .cont2 img{border-radius:50%;width:70%;padding-bottom:20px;}
+    .cont2 p{font-size:1.1rem;padding:10px 0px;}
+
+    /* 3번 콘텐츠 서식 */
+    .jumbotron{
+      color:#fff;
+      background-image:url('./images/imgi_25_biz_bg.png');
+    }
+
+    /* 4번 콘텐츠 서식 */
+    #kdis{}
+    #kdis img{width:100%;max-height:180px;padding-bottom:10px;}
+    /* 이미지 hover 효과 */
+    .news-item {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .news-item img {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .news-item img:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    /* 버튼이 하단에 고정되도록 여백 처리 */
+    .news-item p.text-end {
+      margin-top: auto;
+    }
+
+    /* 버튼 커스텀 */
+    .btn-outline-dark.btn-sm {
+      border-color: #666;
+      color: #333;
+    }
+
+    .btn-outline-dark.btn-sm:hover {
+      background-color: #333;
+      color: #fff;
+    }
+
+    /* 메뉴 구분선 스타일 */
+    .footer-menu a {
+      position: relative;
+      margin: 0 8px;
+      padding-right: 8px;
+    }
+
+    .footer-menu a:not(:last-child)::after {
+      content: "|";
+      color: rgba(255, 255, 255, 0.5); /* 구분선 색 */
+      position: absolute;
+      right: -8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 상단 헤더영역  -->
+  <header>
+    <!-- 내비게이션 바 -->
+    <nav class="navbar navbar-dark navbar-expand-md" aria-label="내비게이션 바">
+      <div class="container-fluid">
+        <a href="#" title="kt 로고" class="p-2">
+          <img src="./images/header_logo.svg" alt="" class="logo">
+        </a>
+
+        <!-- 모바일 해상도일 경우 나오는 전체메뉴 버튼 -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-label="전체메뉴" data-bs-target="#menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- 가로메뉴 -->
+        <div class="collapse navbar-collapse justify-content-between align-items-center" id="menu">
+          <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a href="#" title="" class="nav-link">회사소개</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" title="" class="nav-link">사업소개</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" title="" class="nav-link">ESG 경영</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" title="" class="nav-link">투자정보</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" title="" class="nav-link">홍보채널</a>
+            </li>
+          </ul>
+          <!-- 검색폼 -->
+          <form role="search">
+            <input type="search" placeholder="검색어 입력" aria-label="검색어 입력" class="form-control">
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 메인 콘텐츠 영역 -->
+  <main>
+    <!-- 1. 메인슬라이드 -->
+    <article id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+      <h2 class="text-center">
+        <small>차별화된 가치로 고객의 더 나은 미래를 위해</small>
+        Digital Solution for Your Future
+      </h2>
+
+      <div class="video-wrap">
+        <video autoplay muted loop>
+          <source src="./video/visual_bg.mp4" type="video/mp4">
+        </video>
+      </div>
+    </article>
+
+    <!-- 2. 가로 3단 목록 콘텐츠 -->
+    <article class="container mt-5 mb-5">
+      <div class="row cont2 pt-3 pb-3">
+        <div class="col-lg-4 text-center">
+          <img src="./images/imgi_6_ESG_card1.png" alt="환경">
+          <h2>환경</h2>
+          <p>온실가스 저감 Green 정책을 시작으로 임직원 모두가 친환경 프로젝트에 동참하고 있습니다.</p>
+        </div>
+        <div class="col-lg-4 text-center">
+          <img src="./images/imgi_7_ESG_card2.png" alt="사회">
+          <h2>사회</h2>
+          <p>최상의 업무 환경을 구축하여 상생 협력과 동반 성장을 위한 더불어 사는 세상을 만들어 갑니다.</p>
+        </div>
+        <div class="col-lg-4 text-center">
+          <img src="./images/imgi_8_ESG_card3.png" alt="지배구조">
+          <h2>지배구조</h2>
+          <p>전사 컴플라이언스 체계를 통해 투명하고 신뢰할 수 있는 지배구조를 만들기 위해 노력합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3. 점보트론 -->
+    <article class="container">
+      <div class="jumbotron text-center bg-body-tertiary rounded-3 mb-5 mt-5">
+        <h2>AI 서비스 혁신 파트너
+</h2>
+        <p class="txt01">kt is는 최고의 고객 서비스와 DX역량을 기반으로 차별화된 경험과
+가치를 제공하여 고객의 보다 나은 미래를 만드는데 기여하고
+있습니다.<br>현재에 안주하지 않고 "연결된 성장"을 이룰 수 있도록 앞으로도
+kt is는 본업인 고객 서비스를 단단히 하고 AI 경쟁력 차별화를 통해
+디지털 서비스 혁신을 주도하겠습니다.</p>
+        <p><a href="#" role="button" title="더보기" class="btn btn-primary btn-mg">더보기</a></p>
+      </div>
+    </article>
+
+    <!-- 4. 가로 4단 목록 콘텐츠 -->
+    <article id="kdis" class="container py-5">
+      <h2 class="text-center fw-bold pb-4">KT is의 새로운 소식을 확인해 보세요!</h2>
+
+      <div class="row g-4">
+        <!-- 카드 1 -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="news-item h-100 d-flex flex-column">
+            <img src="./images/imgi_11_20251024100352_39642.jpg" alt="KTis 케어 프로그램" class="img-fluid rounded mb-3">
+            <p class="fw-semibold">KTis, 고객센터 상담사 위한 '케어 프로그램' 상시 운영</p>
+            <p class="text-end">
+              <a href="#" role="button" class="btn btn-outline-dark btn-sm">더보기</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- 카드 2 -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="news-item h-100 d-flex flex-column">
+            <img src="./images/imgi_12_20250924164134_32678.jpg" alt="KTis 건강검진 예약 대행" class="img-fluid rounded mb-3">
+            <p class="fw-semibold">"02-114로 건강검진 예약하세요"…KTis, 예약 대행 주말 확대</p>
+            <p class="text-end">
+              <a href="#" role="button" class="btn btn-outline-dark btn-sm">더보기</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- 카드 3 -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="news-item h-100 d-flex flex-column">
+            <img src="./images/imgi_13_20250811102053_47893.jpg" alt="KTis 동화책 낭독 봉사" class="img-fluid rounded mb-3">
+            <p class="fw-semibold">KTis, 임직원·자녀 함께한 동화책 낭독 봉사</p>
+            <p class="text-end">
+              <a href="#" role="button" class="btn btn-outline-dark btn-sm">더보기</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- 카드 4 -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="news-item h-100 d-flex flex-column">
+            <img src="./images/imgi_14_20250724090615_62351.jpg" alt="KTis 민생회복 소비쿠폰" class="img-fluid rounded mb-3">
+            <p class="fw-semibold">KTis "민생회복 소비쿠폰 사용처 114에 문의하세요"</p>
+            <p class="text-end">
+              <a href="#" role="button" class="btn btn-outline-dark btn-sm">더보기</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- 하단 푸터영역 -->
+  <footer class="footer bg-dark text-center text-light py-3">
+    <div class="container position-relative">
+      <!-- 위로 바로가기 -->
+      <div class="position-absolute end-0 top-50 translate-middle-y me-3">
+        <a href="#" title="위로 바로가기" class="text-decoration-none link-light">Top</a>
+      </div>
+
+      <!-- 메뉴 -->
+      <p class="mb-0 footer-menu">
+        <a href="#" title="채용안내" class="link-light text-decoration-none">채용안내</a>
+        <a href="#" title="두드림(신문고)" class="link-light text-decoration-none">두드림(신문고)</a>
+        <a href="#" title="문의/제안" class="link-light text-decoration-none">문의/제안</a>
+        <a href="#" title="제증명발급확인" class="link-light text-decoration-none">제증명발급확인</a>
+      </p>
+    </div>
+    <address class="pt-3">Copyright&copy; 2024 kt is Corp. Allrights reserved.</address>
+  </footer>
+
+</body>
+</html>
